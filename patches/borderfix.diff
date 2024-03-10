@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<title>[dwm][patch] Fix transparent borders - sites - public wiki contents of suckless.org
+</title>
+<link rel="icon" type="image/png" href="../favicon.png" />
+<link rel="alternate" type="application/atom+xml" title="sites Atom Feed" href="../atom.xml" />
+<link rel="stylesheet" type="text/css" href="../style.css" />
+</head>
+<body>
+<table><tr><td><a href="../../"><img src="../logo.png" alt="" width="32" height="32" /></a></td><td><h1>sites</h1><span class="desc">public wiki contents of suckless.org
+</span></td></tr><tr class="url"><td></td><td>git clone <a href="git://git.suckless.org/sites">git://git.suckless.org/sites</a></td></tr><tr><td></td><td>
+<a href="../log.html">Log</a> | <a href="../files.html">Files</a> | <a href="../refs.html">Refs</a></td></tr></table>
+<hr/>
+<div id="content">
+<pre><b>commit</b> <a href="../commit/cef6cf5a871e2d53296b9cda28959a6548f98a0c.html">cef6cf5a871e2d53296b9cda28959a6548f98a0c</a>
+<b>parent</b> <a href="../commit/170584dc50890c3d70aa30d28fbe191cec759de5.html">170584dc50890c3d70aa30d28fbe191cec759de5</a>
+<b>Author:</b> szatanjl &lt;<a href="mailto:szatan@gecc.xyz">szatan@gecc.xyz</a>&gt;
+<b>Date:</b>   Tue, 12 May 2020 10:37:22 +0200
+
+[dwm][patch] Fix transparent borders
+
+<b>Diffstat:</b>
+<table><tr><td class="A">A</td><td><a href="#h0">dwm.suckless.org/patches/alpha/dwm-fixborders-6.2.diff</a></td><td> | </td><td class="num">27</td><td><span class="i">+++++++++++++++++++++++++++</span><span class="d"></span></td></tr>
+<tr><td class="M">M</td><td><a href="#h1">dwm.suckless.org/patches/alpha/index.md</a></td><td> | </td><td class="num">12</td><td><span class="i">++++++++++++</span><span class="d"></span></td></tr>
+</table></pre><pre>2 files changed, 39 insertions(+), 0 deletions(-)
+<hr/><b>diff --git a/<a id="h0" href="../file/dwm.suckless.org/patches/alpha/dwm-fixborders-6.2.diff.html">dwm.suckless.org/patches/alpha/dwm-fixborders-6.2.diff</a> b/<a href="../file/dwm.suckless.org/patches/alpha/dwm-fixborders-6.2.diff.html">dwm.suckless.org/patches/alpha/dwm-fixborders-6.2.diff</a></b>
+<a href="#h0-0" id="h0-0" class="h">@@ -0,0 +1,27 @@
+</a><a href="#h0-0-0" id="h0-0-0" class="i">+From 1529909466206016f2101457bbf37c67195714c8 Mon Sep 17 00:00:00 2001
+</a><a href="#h0-0-1" id="h0-0-1" class="i">+From: Jakub Leszczak &lt;szatan@gecc.xyz&gt;
+</a><a href="#h0-0-2" id="h0-0-2" class="i">+Date: Fri, 22 Nov 2019 10:46:53 +0800
+</a><a href="#h0-0-3" id="h0-0-3" class="i">+Subject: [PATCH] Fix transparent borders
+</a><a href="#h0-0-4" id="h0-0-4" class="i">+
+</a><a href="#h0-0-5" id="h0-0-5" class="i">+When terminal has transparency then its borders also become transparent.
+</a><a href="#h0-0-6" id="h0-0-6" class="i">+Fix it by removing transparency from any pixels drawn.
+</a><a href="#h0-0-7" id="h0-0-7" class="i">+---
+</a><a href="#h0-0-8" id="h0-0-8" class="i">+ drw.c | 2 ++
+</a><a href="#h0-0-9" id="h0-0-9" class="i">+ 1 file changed, 2 insertions(+)
+</a><a href="#h0-0-10" id="h0-0-10" class="i">+
+</a><a href="#h0-0-11" id="h0-0-11" class="i">+diff --git a/drw.c b/drw.c
+</a><a href="#h0-0-12" id="h0-0-12" class="i">+index 8fd1ca4..490a592 100644
+</a><a href="#h0-0-13" id="h0-0-13" class="i">+--- a/drw.c
+</a><a href="#h0-0-14" id="h0-0-14" class="i">++++ b/drw.c
+</a><a href="#h0-0-15" id="h0-0-15" class="i">+@@ -202,6 +202,8 @@ drw_clr_create(Drw *drw, Clr *dest, const char *clrname)
+</a><a href="#h0-0-16" id="h0-0-16" class="i">+ 	                       DefaultColormap(drw-&gt;dpy, drw-&gt;screen),
+</a><a href="#h0-0-17" id="h0-0-17" class="i">+ 	                       clrname, dest))
+</a><a href="#h0-0-18" id="h0-0-18" class="i">+ 		die(&quot;error, cannot allocate color &#39;%s&#39;&quot;, clrname);
+</a><a href="#h0-0-19" id="h0-0-19" class="i">++
+</a><a href="#h0-0-20" id="h0-0-20" class="i">++	dest-&gt;pixel |= 0xff &lt;&lt; 24;
+</a><a href="#h0-0-21" id="h0-0-21" class="i">+ }
+</a><a href="#h0-0-22" id="h0-0-22" class="i">+ 
+</a><a href="#h0-0-23" id="h0-0-23" class="i">+ /* Wrapper to create color schemes. The caller has to call free(3) on the
+</a><a href="#h0-0-24" id="h0-0-24" class="i">+-- 
+</a><a href="#h0-0-25" id="h0-0-25" class="i">+2.26.2
+</a><a href="#h0-0-26" id="h0-0-26" class="i">+
+</a><b>diff --git a/<a id="h1" href="../file/dwm.suckless.org/patches/alpha/index.md.html">dwm.suckless.org/patches/alpha/index.md</a> b/<a href="../file/dwm.suckless.org/patches/alpha/index.md.html">dwm.suckless.org/patches/alpha/index.md</a></b>
+<a href="#h1-0" id="h1-0" class="h">@@ -8,13 +8,25 @@ Description
+</a> Allow dwm to have translucent bars, while keeping all the text on it opaque,
+ just like the [alpha-patch for st](//st.suckless.org/patches/alpha/).
+ 
+<a href="#h1-0-3" id="h1-0-3" class="i">+### Fix transparent borders
+</a><a href="#h1-0-4" id="h1-0-4" class="i">+
+</a><a href="#h1-0-5" id="h1-0-5" class="i">+By default dwm might make windows&#39; borders transparent when using
+</a><a href="#h1-0-6" id="h1-0-6" class="i">+composit window manager (e.g. xcompmgr, picom).  Alpha patch allows to
+</a><a href="#h1-0-7" id="h1-0-7" class="i">+make borders opaque.
+</a><a href="#h1-0-8" id="h1-0-8" class="i">+
+</a><a href="#h1-0-9" id="h1-0-9" class="i">+If all you want is to make borders opaque, you don&#39;t care about
+</a><a href="#h1-0-10" id="h1-0-10" class="i">+statusbar opacity and/or have problems applying alpha patch, then you
+</a><a href="#h1-0-11" id="h1-0-11" class="i">+might use fixborders patch instead.
+</a><a href="#h1-0-12" id="h1-0-12" class="i">+
+</a> Download
+ --------
+ * [dwm-alpha-6.1.diff](dwm-alpha-6.1.diff)
+ * [dwm-alpha-20180613-b69c870.diff](dwm-alpha-20180613-b69c870.diff)
+<a href="#h1-0-17" id="h1-0-17" class="i">+* [dwm-fixborders-6.2.diff](dwm-fixborders-6.2.diff)
+</a> 
+ Authors
+ -------
+ * Eon S. Jeon - &lt;esjeon@hyunmu.am&gt;
+ * Laslo Hunhold - &lt;dev@frign.de&gt; (6.1 port)
+ * Thomas Oltmann - &lt;thomas.oltmann.hhg@gmail.com&gt; (20180613-b69c870 port)
+<a href="#h1-0-24" id="h1-0-24" class="i">+* Jakub Leszczak - &lt;szatan@gecc.xyz&gt; (fixborders patch)
+</a></pre>
+</div>
+</body>
+</html>
